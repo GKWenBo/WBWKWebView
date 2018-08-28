@@ -19,12 +19,13 @@ typedef NS_ENUM(NSInteger, WBWKWebViewLoadState) {
 
 @interface WKWebView (WBLoadInfo) <WKNavigationDelegate>
 
-/** < web size > */
+/** < Web contentSize > */
 @property (nonatomic, assign, readonly) CGSize wb_contentSize;
-/** < loading progress > */
+/** < Loading progress > */
 @property (nonatomic, assign, readonly) double wb_estimatedProgress;
-/** < load state > */
+/** < Load state > */
 @property (nonatomic, assign, readonly) WBWKWebViewLoadState wb_loadState;
+/** < Web Load Change Block > */
 @property (nonatomic, copy) WBWKWebViewLoadInfoBlock wb_wkWebViewLoadInfoBlock;
 
 @end

@@ -65,11 +65,12 @@
     __weak typeof(self) weakSelf = self;
     [self evaluateJavaScript:@"navigator.userAgent"
            completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+               __strong typeof(self) strongSelf = weakSelf;
                NSString *userAgent = result;
                NSString *newUserAgent = [userAgent stringByAppendingString:customUserAgent];
                [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent" : newUserAgent}];
                [[NSUserDefaults standardUserDefaults] synchronize];
-               weakSelf.customUserAgent = newUserAgent;
+               strongSelf.customUserAgent = newUserAgent;
            }];
 }
 
@@ -99,12 +100,14 @@
     __weak typeof(self) weakSelf = self;
     [self wb_nodeCountOfTag:@"img"
            completedHandler:^(int tagCount) {
+               __strong typeof(self) strongSelf = weakSelf;
                for (int i = 0; i < tagCount; i ++) {
                    NSString *jsString = [NSString stringWithFormat:@"document.getElementsByTagName('img')[%d].width = '%d'", i, size];
-                   [weakSelf evaluateJavaScript:jsString completionHandler:nil];
+                   [strongSelf evaluateJavaScript:jsString
+                                completionHandler:nil];
                    jsString = [NSString stringWithFormat:@"document.getElementsByTagName('img')[%d].style.width = '%dpx'", i, size];
-                   [weakSelf evaluateJavaScript:jsString
-                              completionHandler:nil];
+                   [strongSelf evaluateJavaScript:jsString
+                                completionHandler:nil];
                }
            }];
 }
@@ -113,13 +116,14 @@
     __weak typeof(self) weakSelf = self;
     [self wb_nodeCountOfTag:@"img"
            completedHandler:^(int tagCount) {
+               __strong typeof(self) strongSelf = weakSelf;
                for (int i = 0; i < tagCount; i ++) {
                    NSString *jsString = [NSString stringWithFormat:@"document.getElementsByTagName('img')[%d].height = '%d'", i, size];
-                   [weakSelf evaluateJavaScript:jsString
-                              completionHandler:nil];
+                   [strongSelf evaluateJavaScript:jsString
+                                completionHandler:nil];
                    jsString = [NSString stringWithFormat:@"document.getElementsByTagName('img')[%d].style.height = '%dpx'", i, size];
-                   [weakSelf evaluateJavaScript:jsString
-                              completionHandler:nil];
+                   [strongSelf evaluateJavaScript:jsString
+                                completionHandler:nil];
                }
            }];
 }
@@ -128,13 +132,14 @@
     __weak typeof(self) weakSelf = self;
     [self wb_nodeCountOfTag:@"img"
            completedHandler:^(int tagCount) {
+               __strong typeof(self) strongSelf = weakSelf;
                for (int i = 0; i < tagCount; i ++) {
                    //利用重定向获取img.src，为区分，给url添加'img:'前缀
                    NSString *jsString = [NSString stringWithFormat:
                                          @"document.getElementsByTagName('img')[%d].onclick = \
                                          function() { document.location.href = 'img' + this.src; }",i];
-                   [weakSelf evaluateJavaScript:jsString
-                              completionHandler:nil];
+                   [strongSelf evaluateJavaScript:jsString
+                                completionHandler:nil];
                }
            }];
 }

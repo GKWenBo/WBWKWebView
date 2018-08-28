@@ -17,7 +17,7 @@ static char kWBLoadingCountKey;
 static char kWBMaxLoadCountKey;
 static char kWBCurrentURLKey;
 static char kWBInteractiveKey;
-static char kWBRealDelegateKey;
+static char kWBRealNavigationDelegateKey;
 
 NSString *wb_completeRPCURLPath = @"/wbwebviewprogressproxy/complete";
 
@@ -28,7 +28,7 @@ NSString *wb_completeRPCURLPath = @"/wbwebviewprogressproxy/complete";
 @property (nonatomic, assign) NSUInteger wb_maxLoadCount;
 @property (nonatomic, strong) NSURL *wb_currentURL;
 @property (nonatomic, assign) BOOL wb_interactive;
-@property (nonatomic, assign) id <WKNavigationDelegate> wb_realDelegate;
+@property (nonatomic, assign) id <WKNavigationDelegate> wb_realNavigationDelegate;
 
 @end
 
@@ -91,12 +91,12 @@ NSString *wb_completeRPCURLPath = @"/wbwebviewprogressproxy/complete";
     return [objc_getAssociatedObject(self, &kWBLoadStateKey) integerValue];
 }
 
-- (void)setWb_realDelegate:(id<WKNavigationDelegate>)wb_realDelegate {
-    objc_setAssociatedObject(self, &kWBRealDelegateKey, wb_realDelegate, OBJC_ASSOCIATION_ASSIGN);
+- (void)setWb_realNavigationDelegate:(id<WKNavigationDelegate>)wb_realDelegate {
+    objc_setAssociatedObject(self, &kWBRealNavigationDelegateKey, wb_realDelegate, OBJC_ASSOCIATION_ASSIGN);
 }
 
-- (id<WKNavigationDelegate>)wb_realDelegate {
-    return objc_getAssociatedObject(self, &kWBRealDelegateKey);
+- (id<WKNavigationDelegate>)wb_realNavigationDelegate {
+    return objc_getAssociatedObject(self, &kWBRealNavigationDelegateKey);
 }
 
 - (void)setWb_wkWebViewLoadInfoBlock:(WBWKWebViewLoadInfoBlock)wb_wkWebViewLoadInfoBlock {
@@ -116,8 +116,8 @@ NSString *wb_completeRPCURLPath = @"/wbwebviewprogressproxy/complete";
         return;
     }
     
-    if ([self.wb_realDelegate respondsToSelector:@selector(webView:decidePolicyForNavigationAction:decisionHandler:)]) {
-        [self.wb_realDelegate webView:webView
+    if ([self.wb_realNavigationDelegate respondsToSelector:@selector(webView:decidePolicyForNavigationAction:decisionHandler:)]) {
+        [self.wb_realNavigationDelegate webView:webView
       decidePolicyForNavigationAction:navigationAction
                       decisionHandler:decisionHandler];
     }
@@ -139,8 +139,8 @@ NSString *wb_completeRPCURLPath = @"/wbwebviewprogressproxy/complete";
 /** < 链接开始加载时调用 > */
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
     self.wb_loadState = WBWKWebViewLoadState_loading;
-    if ([self.wb_realDelegate respondsToSelector:@selector(webView:didStartProvisionalNavigation:)]) {
-        [self.wb_realDelegate webView:webView
+    if ([self.wb_realNavigationDelegate respondsToSelector:@selector(webView:didStartProvisionalNavigation:)]) {
+        [self.wb_realNavigationDelegate webView:webView
         didStartProvisionalNavigation:navigation];
     }
     
@@ -151,36 +151,39 @@ NSString *wb_completeRPCURLPath = @"/wbwebviewprogressproxy/complete";
 
 /** < 加载完成 > */
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    if ([self.wb_realDelegate respondsToSelector:@selector(webView:didFinishNavigation:)]) {
-        [self.wb_realDelegate webView:webView
+    if ([self.wb_realNavigationDelegate respondsToSelector:@selector(webView:didFinishNavigation:)]) {
+        [self.wb_realNavigationDelegate webView:webView
                   didFinishNavigation:navigation];
     }
     
     self.wb_loadingCount --;
     [self wb_incrementProgress];
-    
+    __weak typeof(self) weakSelf = self;
     [webView evaluateJavaScript:@"document.readyState"
               completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+                  __strong typeof(self) strongSelf = weakSelf;
                   NSString *readyState = (NSString *)result;
                   BOOL interactive = [readyState isEqualToString:@"interactive"];;
                   if (interactive) {
-                      self.wb_interactive = YES;
+                      strongSelf.wb_interactive = YES;
+                      strongSelf.wb_loadState = WBWKWebViewLoadState_interactive;
+                      
                       NSString *waitForCompleteJS = [NSString stringWithFormat:@"window.addEventListener('load',function() { var iframe = document.createElement('iframe'); iframe.style.display = 'none'; iframe.src = '%@://%@%@'; document.body.appendChild(iframe);  }, false);", webView.URL.scheme, webView.URL.host, wb_completeRPCURLPath];
                       [webView evaluateJavaScript:waitForCompleteJS
                                 completionHandler:nil];
                   }
-                  BOOL isNotRedirect = self.wb_currentURL && [self.wb_currentURL isEqual:webView.URL];
+                  BOOL isNotRedirect = strongSelf.wb_currentURL && [strongSelf.wb_currentURL isEqual:webView.URL];
                   BOOL complete = [readyState isEqualToString:@"complete"];
                   if (complete && isNotRedirect) {
-                      [self wb_completeProgress];
+                      [strongSelf wb_completeProgress];
                   }
               }];
 }
 
 /** < 加载失败 > */
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    if ([self.wb_realDelegate respondsToSelector:@selector(webView:didFailProvisionalNavigation:withError:)]) {
-        [self.wb_realDelegate webView:webView
+    if ([self.wb_realNavigationDelegate respondsToSelector:@selector(webView:didFailProvisionalNavigation:withError:)]) {
+        [self.wb_realNavigationDelegate webView:webView
          didFailProvisionalNavigation:navigation
                             withError:error];
     }
@@ -188,20 +191,22 @@ NSString *wb_completeRPCURLPath = @"/wbwebviewprogressproxy/complete";
     self.wb_loadingCount --;
     [self wb_incrementProgress];
     
+    __weak typeof(self) weakSelf = self;
     [webView evaluateJavaScript:@"document.readyState"
               completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+                  __strong typeof(self) strongSelf = weakSelf;
                   NSString *readyState = (NSString *)result;
                   BOOL interactive = [readyState isEqualToString:@"interactive"];;
                   if (interactive) {
-                      self.wb_interactive = YES;
+                      strongSelf.wb_interactive = YES;
                       NSString *waitForCompleteJS = [NSString stringWithFormat:@"window.addEventListener('load',function() { var iframe = document.createElement('iframe'); iframe.style.display = 'none'; iframe.src = '%@://%@%@'; document.body.appendChild(iframe);  }, false);", webView.URL.scheme, webView.URL.host, wb_completeRPCURLPath];
                       [webView evaluateJavaScript:waitForCompleteJS
                                 completionHandler:nil];
                   }
-                  BOOL isNotRedirect = self.wb_currentURL && [self.wb_currentURL isEqual:webView.URL];
+                  BOOL isNotRedirect = strongSelf.wb_currentURL && [strongSelf.wb_currentURL isEqual:webView.URL];
                   BOOL complete = [readyState isEqualToString:@"complete"];
-                  if (complete && isNotRedirect) {
-                      [self wb_completeProgress];
+                  if ((complete && isNotRedirect) || error) {
+                      [strongSelf wb_completeProgress];
                   }
               }];
 }
@@ -222,6 +227,7 @@ NSString *wb_completeRPCURLPath = @"/wbwebviewprogressproxy/complete";
 {
     if (progress > self.wb_estimatedProgress || progress == 0) {
         self.wb_estimatedProgress = progress;
+        self.wb_contentSize = self.scrollView.contentSize;
         if (self.wb_wkWebViewLoadInfoBlock) {
             self.wb_wkWebViewLoadInfoBlock(self.wb_estimatedProgress,self.scrollView.contentSize,self);
         }
@@ -258,7 +264,7 @@ NSString *wb_completeRPCURLPath = @"/wbwebviewprogressproxy/complete";
 - (void)wb_setDelegateIfNoDelegateSet
 {
     if (self.navigationDelegate != (id<WKNavigationDelegate>)self) {
-        self.wb_realDelegate  = self.navigationDelegate;
+        self.wb_realNavigationDelegate  = self.navigationDelegate;
         self.navigationDelegate = (id<WKNavigationDelegate>)self;
     }
 }

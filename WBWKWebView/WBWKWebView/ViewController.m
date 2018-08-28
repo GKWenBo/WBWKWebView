@@ -51,14 +51,16 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [_wkWebView loadRequest:request];
     
+    __weak typeof(self) weakSelf = self;
     _wkWebView.wb_wkWebViewLoadInfoBlock = ^(double estimatedProgress, CGSize contentSize, WKWebView *wkWebView) {
+        __strong typeof(self) strongSelf = weakSelf;
         NSLog(@"contentSize = %@",NSStringFromCGSize(contentSize));
         NSLog(@"estimatedProgress = %f",estimatedProgress);
         if (estimatedProgress == 1.f) {
-            CGRect frame = _wkWebView.frame;
+            CGRect frame = strongSelf -> _wkWebView.frame;
             frame.size.height = contentSize.height;
-            _wkWebView.frame = frame;
-            _scollView.contentSize = contentSize;
+            strongSelf -> _wkWebView.frame = frame;
+            strongSelf -> _scollView.contentSize = contentSize;
         }
     };
 }
