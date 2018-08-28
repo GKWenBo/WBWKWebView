@@ -44,6 +44,13 @@
 // MARK:Setup
 
 /**
+ Eidt UserAgent.
+
+ @param customUserAgent customUserAgent
+ */
+- (void)wb_setCustomUserAgent:(NSString *)customUserAgent;
+
+/**
  Change font size.
 
  @param fontSize 文字大小
@@ -65,6 +72,39 @@
  @param color 背景颜色
  */
 - (void)wb_setWebBackgroudColor:(UIColor *)color;
+
+/**
+ Change all imageView width.
+ 
+ @param size width
+ */
+- (void)wb_setImgWidth:(int)size;
+
+/**
+ Chage all imageView height
+ 
+ @param size height
+ */
+- (void)wb_setImgHeight:(int)size;
+
+/**
+ 为所有图片添加点击事件(网页中有些图片添加无效,需要协议方法配合截取)
+ */
+- (void)wb_addClickEventOnImg;
+
+/**
+ 根据id隐藏网页元素
+
+ @param idString id名
+ */
+- (void)wb_hiddenElementById:(NSString *)idString;
+
+/**
+ 隐藏指定类名元素
+
+ @param className 类名
+ */
+- (void)wb_hiddenElementByClassName:(NSString *)className;
 
 // MARK:Delete
 /**

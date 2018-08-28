@@ -61,6 +61,18 @@
            }];    
 }
 
+- (void)wb_setCustomUserAgent:(NSString *)customUserAgent {
+    __weak typeof(self) weakSelf = self;
+    [self evaluateJavaScript:@"navigator.userAgent"
+           completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+               NSString *userAgent = result;
+               NSString *newUserAgent = [userAgent stringByAppendingString:customUserAgent];
+               [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent" : newUserAgent}];
+               [[NSUserDefaults standardUserDefaults] synchronize];
+               weakSelf.customUserAgent = newUserAgent;
+           }];
+}
+
 - (void)wb_chnageFontSize:(int)fontSize {
     NSString *jsString = [NSString stringWithFormat:@"document.querySelectorAll('.wrap')[0].style.fontSize= '%dpx'",fontSize];
     [self evaluateJavaScript:jsString
@@ -79,6 +91,62 @@
 
 - (void)wb_setWebBackgroudColor:(UIColor *)color {
     NSString * jsString = [NSString stringWithFormat:@"document.body.style.backgroundColor = '%@'",[color wb_webColorString]];
+    [self evaluateJavaScript:jsString
+           completionHandler:nil];
+}
+
+- (void)wb_setImgWidth:(int)size {
+    __weak typeof(self) weakSelf = self;
+    [self wb_nodeCountOfTag:@"img"
+           completedHandler:^(int tagCount) {
+               for (int i = 0; i < tagCount; i ++) {
+                   NSString *jsString = [NSString stringWithFormat:@"document.getElementsByTagName('img')[%d].width = '%d'", i, size];
+                   [weakSelf evaluateJavaScript:jsString completionHandler:nil];
+                   jsString = [NSString stringWithFormat:@"document.getElementsByTagName('img')[%d].style.width = '%dpx'", i, size];
+                   [weakSelf evaluateJavaScript:jsString
+                              completionHandler:nil];
+               }
+           }];
+}
+
+- (void)wb_setImgHeight:(int)size {
+    __weak typeof(self) weakSelf = self;
+    [self wb_nodeCountOfTag:@"img"
+           completedHandler:^(int tagCount) {
+               for (int i = 0; i < tagCount; i ++) {
+                   NSString *jsString = [NSString stringWithFormat:@"document.getElementsByTagName('img')[%d].height = '%d'", i, size];
+                   [weakSelf evaluateJavaScript:jsString
+                              completionHandler:nil];
+                   jsString = [NSString stringWithFormat:@"document.getElementsByTagName('img')[%d].style.height = '%dpx'", i, size];
+                   [weakSelf evaluateJavaScript:jsString
+                              completionHandler:nil];
+               }
+           }];
+}
+
+- (void)wb_addClickEventOnImg {
+    __weak typeof(self) weakSelf = self;
+    [self wb_nodeCountOfTag:@"img"
+           completedHandler:^(int tagCount) {
+               for (int i = 0; i < tagCount; i ++) {
+                   //利用重定向获取img.src，为区分，给url添加'img:'前缀
+                   NSString *jsString = [NSString stringWithFormat:
+                                         @"document.getElementsByTagName('img')[%d].onclick = \
+                                         function() { document.location.href = 'img' + this.src; }",i];
+                   [weakSelf evaluateJavaScript:jsString
+                              completionHandler:nil];
+               }
+           }];
+}
+
+- (void)wb_hiddenElementById:(NSString *)idString {
+    NSString *jsString = [NSString stringWithFormat:@"document.getElementById(\"%@\").style.display=\"none\";",idString];
+    [self evaluateJavaScript:jsString
+           completionHandler:nil];
+}
+
+- (void)wb_hiddenElementByClassName:(NSString *)className {
+    NSString *jsString = [NSString stringWithFormat:@"document.getElementsByClassName('%@')[0].hidden = true;",className];
     [self evaluateJavaScript:jsString
            completionHandler:nil];
 }

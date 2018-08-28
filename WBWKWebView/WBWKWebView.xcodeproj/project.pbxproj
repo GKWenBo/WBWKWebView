@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C56B6957213587E4004B4951 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = C56B6956213587E3004B4951 /* test.html */; };
+		C56B695A213594F4004B4951 /* WKWebView+WBLoadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C56B6959213594F4004B4951 /* WKWebView+WBLoadInfo.m */; };
 		D0B529A221351B1B00D957CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529A121351B1B00D957CF /* AppDelegate.m */; };
 		D0B529A521351B1B00D957CF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529A421351B1B00D957CF /* ViewController.m */; };
 		D0B529AA21351B1D00D957CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0B529A921351B1D00D957CF /* Assets.xcassets */; };
@@ -14,8 +16,6 @@
 		D0B529B021351B1D00D957CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529AF21351B1D00D957CF /* main.m */; };
 		D0B529BA21351B1D00D957CF /* WBWKWebViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529B921351B1D00D957CF /* WBWKWebViewTests.m */; };
 		D0B529C521351B1D00D957CF /* WBWKWebViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529C421351B1D00D957CF /* WBWKWebViewUITests.m */; };
-		D0B529DB21351B4C00D957CF /* UIWebView+WBKeyValueStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529D521351B4C00D957CF /* UIWebView+WBKeyValueStorage.m */; };
-		D0B529DD21351B4C00D957CF /* UIWebView+WBJavaScript.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529D821351B4C00D957CF /* UIWebView+WBJavaScript.m */; };
 		D0B529E021351D7C00D957CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0B529DF21351D7B00D957CF /* Main.storyboard */; };
 		D0B529E421351F1400D957CF /* WKWebView+WBAdditional.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529E321351F1400D957CF /* WKWebView+WBAdditional.m */; };
 		D0B529E72135227600D957CF /* WKWebView+WBMetaParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529E62135227600D957CF /* WKWebView+WBMetaParser.m */; };
@@ -40,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C56B6956213587E3004B4951 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
+		C56B6958213594F4004B4951 /* WKWebView+WBLoadInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKWebView+WBLoadInfo.h"; sourceTree = "<group>"; };
+		C56B6959213594F4004B4951 /* WKWebView+WBLoadInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+WBLoadInfo.m"; sourceTree = "<group>"; };
 		D0B5299D21351B1B00D957CF /* WBWKWebView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WBWKWebView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0B529A021351B1B00D957CF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D0B529A121351B1B00D957CF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -55,10 +58,6 @@
 		D0B529C021351B1D00D957CF /* WBWKWebViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WBWKWebViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0B529C421351B1D00D957CF /* WBWKWebViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBWKWebViewUITests.m; sourceTree = "<group>"; };
 		D0B529C621351B1D00D957CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D0B529D421351B4C00D957CF /* UIWebView+WBJavaScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+WBJavaScript.h"; sourceTree = "<group>"; };
-		D0B529D521351B4C00D957CF /* UIWebView+WBKeyValueStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+WBKeyValueStorage.m"; sourceTree = "<group>"; };
-		D0B529D721351B4C00D957CF /* UIWebView+WBKeyValueStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+WBKeyValueStorage.h"; sourceTree = "<group>"; };
-		D0B529D821351B4C00D957CF /* UIWebView+WBJavaScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+WBJavaScript.m"; sourceTree = "<group>"; };
 		D0B529DF21351D7B00D957CF /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D0B529E221351F1400D957CF /* WKWebView+WBAdditional.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKWebView+WBAdditional.h"; sourceTree = "<group>"; };
 		D0B529E321351F1400D957CF /* WKWebView+WBAdditional.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+WBAdditional.m"; sourceTree = "<group>"; };
@@ -117,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				D0B529E121351EF200D957CF /* WKWebView */,
-				D0B529D221351B4C00D957CF /* UIWebView */,
 				D0B529A021351B1B00D957CF /* AppDelegate.h */,
 				D0B529A121351B1B00D957CF /* AppDelegate.m */,
 				D0B529A321351B1B00D957CF /* ViewController.h */,
@@ -127,6 +125,7 @@
 				D0B529DF21351D7B00D957CF /* Main.storyboard */,
 				D0B529AE21351B1D00D957CF /* Info.plist */,
 				D0B529AF21351B1D00D957CF /* main.m */,
+				C56B6956213587E3004B4951 /* test.html */,
 			);
 			path = WBWKWebView;
 			sourceTree = "<group>";
@@ -149,17 +148,6 @@
 			path = WBWKWebViewUITests;
 			sourceTree = "<group>";
 		};
-		D0B529D221351B4C00D957CF /* UIWebView */ = {
-			isa = PBXGroup;
-			children = (
-				D0B529D421351B4C00D957CF /* UIWebView+WBJavaScript.h */,
-				D0B529D821351B4C00D957CF /* UIWebView+WBJavaScript.m */,
-				D0B529D521351B4C00D957CF /* UIWebView+WBKeyValueStorage.m */,
-				D0B529D721351B4C00D957CF /* UIWebView+WBKeyValueStorage.h */,
-			);
-			path = UIWebView;
-			sourceTree = "<group>";
-		};
 		D0B529E121351EF200D957CF /* WKWebView */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +157,8 @@
 				D0B529E62135227600D957CF /* WKWebView+WBMetaParser.m */,
 				D0B529E82135255300D957CF /* WKWebView+WBJavaScript.h */,
 				D0B529E92135255300D957CF /* WKWebView+WBJavaScript.m */,
+				C56B6958213594F4004B4951 /* WKWebView+WBLoadInfo.h */,
+				C56B6959213594F4004B4951 /* WKWebView+WBLoadInfo.m */,
 			);
 			path = WKWebView;
 			sourceTree = "<group>";
@@ -276,6 +266,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C56B6957213587E4004B4951 /* test.html in Resources */,
 				D0B529E021351D7C00D957CF /* Main.storyboard in Resources */,
 				D0B529AD21351B1D00D957CF /* LaunchScreen.storyboard in Resources */,
 				D0B529AA21351B1D00D957CF /* Assets.xcassets in Resources */,
@@ -305,11 +296,10 @@
 			files = (
 				D0B529A521351B1B00D957CF /* ViewController.m in Sources */,
 				D0B529EA2135255300D957CF /* WKWebView+WBJavaScript.m in Sources */,
-				D0B529DD21351B4C00D957CF /* UIWebView+WBJavaScript.m in Sources */,
 				D0B529B021351B1D00D957CF /* main.m in Sources */,
 				D0B529E421351F1400D957CF /* WKWebView+WBAdditional.m in Sources */,
-				D0B529DB21351B4C00D957CF /* UIWebView+WBKeyValueStorage.m in Sources */,
 				D0B529E72135227600D957CF /* WKWebView+WBMetaParser.m in Sources */,
+				C56B695A213594F4004B4951 /* WKWebView+WBLoadInfo.m in Sources */,
 				D0B529A221351B1B00D957CF /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
