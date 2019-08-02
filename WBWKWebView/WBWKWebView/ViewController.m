@@ -47,8 +47,8 @@
     
     [_scollView addSubview:_wkWebView];
     
-    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForAuxiliaryExecutable:@"test.html"]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForAuxiliaryExecutable:@"test.html"]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://192.168.8.247"]];
     [_wkWebView loadRequest:request];
     
     __weak typeof(self) weakSelf = self;
