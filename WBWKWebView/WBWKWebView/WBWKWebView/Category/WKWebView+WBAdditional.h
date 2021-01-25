@@ -15,5 +15,16 @@
  */
 - (void)wb_allowsBackForwardNavigationGestures;
 
+/**
+ Clear web cache.
+ */
+- (void)wb_clearWebCahce;
+
+/**
+ Eidt UserAgent.
+ 
+ @param customUserAgent customUserAgent
+ */
+- (void)wb_setupCustomUserAgent:(NSString *)customUserAgent;
 
 @end

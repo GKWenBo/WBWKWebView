@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C56B6957213587E4004B4951 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = C56B6956213587E3004B4951 /* test.html */; };
-		C56B695A213594F4004B4951 /* WKWebView+WBLoadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C56B6959213594F4004B4951 /* WKWebView+WBLoadInfo.m */; };
 		D0B529A221351B1B00D957CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529A121351B1B00D957CF /* AppDelegate.m */; };
 		D0B529A521351B1B00D957CF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529A421351B1B00D957CF /* ViewController.m */; };
 		D0B529AA21351B1D00D957CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0B529A921351B1D00D957CF /* Assets.xcassets */; };
@@ -17,9 +16,13 @@
 		D0B529BA21351B1D00D957CF /* WBWKWebViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529B921351B1D00D957CF /* WBWKWebViewTests.m */; };
 		D0B529C521351B1D00D957CF /* WBWKWebViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529C421351B1D00D957CF /* WBWKWebViewUITests.m */; };
 		D0B529E021351D7C00D957CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0B529DF21351D7B00D957CF /* Main.storyboard */; };
-		D0B529E421351F1400D957CF /* WKWebView+WBAdditional.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529E321351F1400D957CF /* WKWebView+WBAdditional.m */; };
-		D0B529E72135227600D957CF /* WKWebView+WBMetaParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529E62135227600D957CF /* WKWebView+WBMetaParser.m */; };
-		D0B529EA2135255300D957CF /* WKWebView+WBJavaScript.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B529E92135255300D957CF /* WKWebView+WBJavaScript.m */; };
+		FD40311825BE9AB8000588ED /* WBWKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD40311725BE9AB8000588ED /* WBWKWebView.m */; };
+		FD40314225BEBD8F000588ED /* WKWebView+WBLoadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FD40313625BEBD8E000588ED /* WKWebView+WBLoadInfo.m */; };
+		FD40314325BEBD8F000588ED /* WKWebView+WBJavaScript.m in Sources */ = {isa = PBXBuildFile; fileRef = FD40313925BEBD8E000588ED /* WKWebView+WBJavaScript.m */; };
+		FD40314425BEBD8F000588ED /* WKWebView+WBCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = FD40313A25BEBD8F000588ED /* WKWebView+WBCapture.m */; };
+		FD40314525BEBD8F000588ED /* UIProgressView+WBWebKit.m in Sources */ = {isa = PBXBuildFile; fileRef = FD40313B25BEBD8F000588ED /* UIProgressView+WBWebKit.m */; };
+		FD40314625BEBD8F000588ED /* WKWebView+WBAdditional.m in Sources */ = {isa = PBXBuildFile; fileRef = FD40313E25BEBD8F000588ED /* WKWebView+WBAdditional.m */; };
+		FD40314725BEBD8F000588ED /* WKWebView+WBMetaParser.m in Sources */ = {isa = PBXBuildFile; fileRef = FD40314025BEBD8F000588ED /* WKWebView+WBMetaParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,8 +44,6 @@
 
 /* Begin PBXFileReference section */
 		C56B6956213587E3004B4951 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
-		C56B6958213594F4004B4951 /* WKWebView+WBLoadInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKWebView+WBLoadInfo.h"; sourceTree = "<group>"; };
-		C56B6959213594F4004B4951 /* WKWebView+WBLoadInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+WBLoadInfo.m"; sourceTree = "<group>"; };
 		D0B5299D21351B1B00D957CF /* WBWKWebView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WBWKWebView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0B529A021351B1B00D957CF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D0B529A121351B1B00D957CF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -59,12 +60,20 @@
 		D0B529C421351B1D00D957CF /* WBWKWebViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBWKWebViewUITests.m; sourceTree = "<group>"; };
 		D0B529C621351B1D00D957CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D0B529DF21351D7B00D957CF /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		D0B529E221351F1400D957CF /* WKWebView+WBAdditional.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKWebView+WBAdditional.h"; sourceTree = "<group>"; };
-		D0B529E321351F1400D957CF /* WKWebView+WBAdditional.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+WBAdditional.m"; sourceTree = "<group>"; };
-		D0B529E52135227600D957CF /* WKWebView+WBMetaParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKWebView+WBMetaParser.h"; sourceTree = "<group>"; };
-		D0B529E62135227600D957CF /* WKWebView+WBMetaParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+WBMetaParser.m"; sourceTree = "<group>"; };
-		D0B529E82135255300D957CF /* WKWebView+WBJavaScript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKWebView+WBJavaScript.h"; sourceTree = "<group>"; };
-		D0B529E92135255300D957CF /* WKWebView+WBJavaScript.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+WBJavaScript.m"; sourceTree = "<group>"; };
+		FD40311625BE9AB8000588ED /* WBWKWebView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WBWKWebView.h; sourceTree = "<group>"; };
+		FD40311725BE9AB8000588ED /* WBWKWebView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WBWKWebView.m; sourceTree = "<group>"; };
+		FD40313625BEBD8E000588ED /* WKWebView+WBLoadInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+WBLoadInfo.m"; sourceTree = "<group>"; };
+		FD40313725BEBD8E000588ED /* WKWebView+WBCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+WBCapture.h"; sourceTree = "<group>"; };
+		FD40313825BEBD8E000588ED /* WKWebView+WBAdditional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+WBAdditional.h"; sourceTree = "<group>"; };
+		FD40313925BEBD8E000588ED /* WKWebView+WBJavaScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+WBJavaScript.m"; sourceTree = "<group>"; };
+		FD40313A25BEBD8F000588ED /* WKWebView+WBCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+WBCapture.m"; sourceTree = "<group>"; };
+		FD40313B25BEBD8F000588ED /* UIProgressView+WBWebKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIProgressView+WBWebKit.m"; sourceTree = "<group>"; };
+		FD40313C25BEBD8F000588ED /* WKWebView+WBJavaScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+WBJavaScript.h"; sourceTree = "<group>"; };
+		FD40313D25BEBD8F000588ED /* WKWebView+WBMetaParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+WBMetaParser.h"; sourceTree = "<group>"; };
+		FD40313E25BEBD8F000588ED /* WKWebView+WBAdditional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+WBAdditional.m"; sourceTree = "<group>"; };
+		FD40313F25BEBD8F000588ED /* UIProgressView+WBWebKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIProgressView+WBWebKit.h"; sourceTree = "<group>"; };
+		FD40314025BEBD8F000588ED /* WKWebView+WBMetaParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+WBMetaParser.m"; sourceTree = "<group>"; };
+		FD40314125BEBD8F000588ED /* WKWebView+WBLoadInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebView+WBLoadInfo.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,17 +160,41 @@
 		D0B529E121351EF200D957CF /* WKWebView */ = {
 			isa = PBXGroup;
 			children = (
-				D0B529E221351F1400D957CF /* WKWebView+WBAdditional.h */,
-				D0B529E321351F1400D957CF /* WKWebView+WBAdditional.m */,
-				D0B529E52135227600D957CF /* WKWebView+WBMetaParser.h */,
-				D0B529E62135227600D957CF /* WKWebView+WBMetaParser.m */,
-				D0B529E82135255300D957CF /* WKWebView+WBJavaScript.h */,
-				D0B529E92135255300D957CF /* WKWebView+WBJavaScript.m */,
-				C56B6958213594F4004B4951 /* WKWebView+WBLoadInfo.h */,
-				C56B6959213594F4004B4951 /* WKWebView+WBLoadInfo.m */,
+				FD40310625BE9A86000588ED /* Category */,
+				FD40310525BE9A86000588ED /* WBWebView */,
 			);
 			path = WKWebView;
 			sourceTree = "<group>";
+		};
+		FD40310525BE9A86000588ED /* WBWebView */ = {
+			isa = PBXGroup;
+			children = (
+				FD40311625BE9AB8000588ED /* WBWKWebView.h */,
+				FD40311725BE9AB8000588ED /* WBWKWebView.m */,
+			);
+			name = WBWebView;
+			path = WBWKWebView/WBWKWebView/WBWebView;
+			sourceTree = SOURCE_ROOT;
+		};
+		FD40310625BE9A86000588ED /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				FD40313F25BEBD8F000588ED /* UIProgressView+WBWebKit.h */,
+				FD40313B25BEBD8F000588ED /* UIProgressView+WBWebKit.m */,
+				FD40313825BEBD8E000588ED /* WKWebView+WBAdditional.h */,
+				FD40313E25BEBD8F000588ED /* WKWebView+WBAdditional.m */,
+				FD40313725BEBD8E000588ED /* WKWebView+WBCapture.h */,
+				FD40313A25BEBD8F000588ED /* WKWebView+WBCapture.m */,
+				FD40313C25BEBD8F000588ED /* WKWebView+WBJavaScript.h */,
+				FD40313925BEBD8E000588ED /* WKWebView+WBJavaScript.m */,
+				FD40314125BEBD8F000588ED /* WKWebView+WBLoadInfo.h */,
+				FD40313625BEBD8E000588ED /* WKWebView+WBLoadInfo.m */,
+				FD40313D25BEBD8F000588ED /* WKWebView+WBMetaParser.h */,
+				FD40314025BEBD8F000588ED /* WKWebView+WBMetaParser.m */,
+			);
+			name = Category;
+			path = WBWKWebView/WBWKWebView/Category;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -294,13 +327,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD40314225BEBD8F000588ED /* WKWebView+WBLoadInfo.m in Sources */,
 				D0B529A521351B1B00D957CF /* ViewController.m in Sources */,
-				D0B529EA2135255300D957CF /* WKWebView+WBJavaScript.m in Sources */,
 				D0B529B021351B1D00D957CF /* main.m in Sources */,
-				D0B529E421351F1400D957CF /* WKWebView+WBAdditional.m in Sources */,
-				D0B529E72135227600D957CF /* WKWebView+WBMetaParser.m in Sources */,
-				C56B695A213594F4004B4951 /* WKWebView+WBLoadInfo.m in Sources */,
 				D0B529A221351B1B00D957CF /* AppDelegate.m in Sources */,
+				FD40314525BEBD8F000588ED /* UIProgressView+WBWebKit.m in Sources */,
+				FD40314425BEBD8F000588ED /* WKWebView+WBCapture.m in Sources */,
+				FD40311825BE9AB8000588ED /* WBWKWebView.m in Sources */,
+				FD40314325BEBD8F000588ED /* WKWebView+WBJavaScript.m in Sources */,
+				FD40314725BEBD8F000588ED /* WKWebView+WBMetaParser.m in Sources */,
+				FD40314625BEBD8F000588ED /* WKWebView+WBAdditional.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

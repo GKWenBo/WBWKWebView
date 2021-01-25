@@ -16,8 +16,8 @@
            completionHandler:^(id _Nullable result, NSError * _Nullable error) {
                if (completedHandler) {
                    completedHandler([result intValue]);
-               }
-           }];
+       }
+    }];
 }
 
 - (void)wb_getCurrentURL:(void(^) (NSString *url))completedHandler {
@@ -26,7 +26,7 @@
                if (completedHandler) {
                    completedHandler(result);
                }
-           }];
+    }];
 }
 
 - (void)wb_getCurrentTitle:(void (^) (NSString *title))completedHandler {
@@ -35,22 +35,18 @@
                if (completedHandler) {
                    completedHandler(result);
                }
-           }];
+    }];
 }
 
 - (void)wb_getImages:(void (^) (NSArray *images))completedHandler {
     [self evaluateJavaScript:@"var objs = document.getElementsByTagName(\"img\");\
      var imgUrlStr = '';\
      for(var i = 0; i < objs.length; i ++){\
-         if(i == 0){\
-             if(objs[i].alt == ''){\
-                 imgUrlStr = objs[i].src;\
-             }\
-         }else{\
-             if(objs[i].alt==''){\
-                 imgUrlStr += ',' + objs[i].src;\
-            }\
-        }\
+     if(i == 0){\
+     imgUrlStr = objs[i].src;\
+     }else{\
+     imgUrlStr += '#' + objs[i].src;\
+     }\
      }"
            completionHandler:^(id _Nullable result, NSError * _Nullable error) {
                NSString *imageUrlString = (NSString *)result;
@@ -58,26 +54,66 @@
                if (completedHandler) {
                    completedHandler(imageArray);
                }
-           }];    
+    }];
 }
 
-- (void)wb_setCustomUserAgent:(NSString *)customUserAgent {
-    __weak typeof(self) weakSelf = self;
-    [self evaluateJavaScript:@"navigator.userAgent"
+- (void)wb_getScrollHeight:(void (^) (CGFloat scrollHeight))completedHandler {
+    [self evaluateJavaScript:@"document.body.scrollHeight"
            completionHandler:^(id _Nullable result, NSError * _Nullable error) {
-               __strong typeof(self) strongSelf = weakSelf;
-               NSString *userAgent = result;
-               NSString *newUserAgent = [userAgent stringByAppendingString:customUserAgent];
-               [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent" : newUserAgent}];
-               [[NSUserDefaults standardUserDefaults] synchronize];
-               strongSelf.customUserAgent = newUserAgent;
-           }];
+               if (completedHandler) {
+                   completedHandler([result floatValue]);
+               }
+    }];
+}
+
+- (void)wb_getOffsetHeight:(void (^) (CGFloat offsetHeight))completedHandler {
+    [self evaluateJavaScript:@"document.body.offsetHeight"
+           completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+               if (completedHandler) {
+                   completedHandler([result floatValue]);
+               }
+    }];
+}
+
+- (void)wb_getMaxDocumentBodyScrollHeight:(void (^)(CGFloat height))completedHandler {
+    [self evaluateJavaScript:@"document.readyState" completionHandler:^(id _Nullable complete, NSError * _Nullable error) {
+        if (complete) {
+            /// 获取最大高度
+            [self evaluateJavaScript:@"Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight)" completionHandler:^(id _Nullable height, NSError * _Nullable error) {
+                if (height) {
+                    !completedHandler ?: completedHandler([height floatValue]);
+                } else {
+                    !completedHandler ?: completedHandler(0);
+                }
+            }];
+        }
+    }];
 }
 
 - (void)wb_chnageFontSize:(int)fontSize {
     NSString *jsString = [NSString stringWithFormat:@"document.querySelectorAll('.wrap')[0].style.fontSize= '%dpx'",fontSize];
     [self evaluateJavaScript:jsString
            completionHandler:nil];
+}
+
+- (void)wb_getCookieString:(void (^) (NSString *cookieString))completedHandler {
+    [self evaluateJavaScript:@"document.cookie"
+           completionHandler:^(id _Nullable cookie, NSError * _Nullable error) {
+               if (completedHandler) {
+                   completedHandler(cookie);
+               }
+    }];
+}
+
+- (void)wb_getLongPressImageUrlWithPoint:(CGPoint)touchPoint
+                        completedHandler:(void (^) (NSString *imageUrl))completedHandler {
+    NSString *jsString = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).src", touchPoint.x, touchPoint.y];
+    [self evaluateJavaScript:jsString
+           completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+               if (completedHandler) {
+                   completedHandler(result);
+               }
+    }];
 }
 
 - (void)wb_setFontSize:(int)fontSize
@@ -90,11 +126,11 @@
            completionHandler:nil];
 }
 
-- (void)wb_setWebBackgroudColor:(UIColor *)color {
-    NSString * jsString = [NSString stringWithFormat:@"document.body.style.backgroundColor = '%@'",[color wb_webColorString]];
-    [self evaluateJavaScript:jsString
-           completionHandler:nil];
-}
+//- (void)wb_setWebBackgroudColor:(UIColor *)color {
+//    NSString * jsString = [NSString stringWithFormat:@"document.body.style.backgroundColor = '%@'",[color wb_webColorString]];
+//    [self evaluateJavaScript:jsString
+//           completionHandler:nil];
+//}
 
 - (void)wb_setImgWidth:(int)size {
     __weak typeof(self) weakSelf = self;
@@ -108,8 +144,8 @@
                    jsString = [NSString stringWithFormat:@"document.getElementsByTagName('img')[%d].style.width = '%dpx'", i, size];
                    [strongSelf evaluateJavaScript:jsString
                                 completionHandler:nil];
-               }
-           }];
+        }
+    }];
 }
 
 - (void)wb_setImgHeight:(int)size {
@@ -124,8 +160,8 @@
                    jsString = [NSString stringWithFormat:@"document.getElementsByTagName('img')[%d].style.height = '%dpx'", i, size];
                    [strongSelf evaluateJavaScript:jsString
                                 completionHandler:nil];
-               }
-           }];
+       }
+   }];
 }
 
 - (void)wb_addClickEventOnImg {
@@ -136,12 +172,18 @@
                for (int i = 0; i < tagCount; i ++) {
                    //利用重定向获取img.src，为区分，给url添加'img:'前缀
                    NSString *jsString = [NSString stringWithFormat:
-                                         @"document.getElementsByTagName('img')[%d].onclick = \
-                                         function() { document.location.href = 'img' + this.src; }",i];
+                                         @"var objs = document.getElementsByTagName(\"img\");\
+                                         for(var i = 0; i < objs.length; i ++){\
+                                         objs[i].setAttribute(\"index\", i);\
+                                         objs[i].onclick =\
+                                         function () {\
+                                         document.location.href = 'img' + this.getAttribute(\"index\");\
+                                         }\
+                                         }"];
                    [strongSelf evaluateJavaScript:jsString
                                 completionHandler:nil];
-               }
-           }];
+       }
+   }];
 }
 
 - (void)wb_hiddenElementById:(NSString *)idString {
@@ -153,6 +195,16 @@
 - (void)wb_hiddenElementByClassName:(NSString *)className {
     NSString *jsString = [NSString stringWithFormat:@"document.getElementsByClassName('%@')[0].hidden = true;",className];
     [self evaluateJavaScript:jsString
+           completionHandler:nil];
+}
+
+- (void)wb_disableLongTouch {
+    [self evaluateJavaScript:@"document.documentElement.style.webkitTouchCallout='none';"
+           completionHandler:nil];
+}
+
+- (void)wb_disableSelected {
+    [self evaluateJavaScript:@"document.documentElement.style.webkitUserSelect='none';"
            completionHandler:nil];
 }
 
@@ -190,51 +242,24 @@
 
 @implementation UIColor (WBWebColor)
 
-- (NSString *)wb_canvasColorString {
-    CGFloat *arrRGBA = [self wb_getRGB];
-    int r = arrRGBA[0] * 255;
-    int g = arrRGBA[1] * 255;
-    int b = arrRGBA[2] * 255;
-    float a = arrRGBA[3];
-    return [NSString stringWithFormat:@"rgba(%d,%d,%d,%f)", r, g, b, a];
-}
-
-- (NSString *)wb_webColorString {
-    CGFloat *arrRGBA = [self wb_getRGB];
-    int r = arrRGBA[0] * 255;
-    int g = arrRGBA[1] * 255;
-    int b = arrRGBA[2] * 255;
-    NSLog(@"%d,%d,%d", r, g, b);
-    NSString *webColor = [NSString stringWithFormat:@"#%02X%02X%02X", r, g, b];
-    return webColor;
-}
-
-- (CGFloat *) wb_getRGB{
-    UIColor * uiColor = self;
-    CGColorRef cgColor = [uiColor CGColor];
-    int numComponents = (int)CGColorGetNumberOfComponents(cgColor);
-    if (numComponents == 4){
-        static CGFloat * components = Nil;
-        components = (CGFloat *) CGColorGetComponents(cgColor);
-        return (CGFloat *)components;
-    } else { //否则默认返回黑色
-        static CGFloat components[4] = {0};
-        CGFloat f = 0;
-        //非RGB空间的系统颜色单独处理
-        if ([uiColor isEqual:[UIColor whiteColor]]) {
-            f = 1.0;
-        } else if ([uiColor isEqual:[UIColor lightGrayColor]]) {
-            f = 0.8;
-        } else if ([uiColor isEqual:[UIColor grayColor]]) {
-            f = 0.5;
-        }
-        components[0] = f;
-        components[1] = f;
-        components[2] = f;
-        components[3] = 1.0;
-        return (CGFloat *)components;
-    }
-}
+//- (NSString *)wb_canvasColorString {
+//    CGFloat *arrRGBA = [self wb_getRGB];
+//    int r = arrRGBA[0] * 255;
+//    int g = arrRGBA[1] * 255;
+//    int b = arrRGBA[2] * 255;
+//    float a = arrRGBA[3];
+//    return [NSString stringWithFormat:@"rgba(%d,%d,%d,%f)", r, g, b, a];
+//}
+//
+//- (NSString *)wb_webColorString {
+//    CGFloat *arrRGBA = [self wb_getRGB];
+//    int r = arrRGBA[0] * 255;
+//    int g = arrRGBA[1] * 255;
+//    int b = arrRGBA[2] * 255;
+//    NSLog(@"%d,%d,%d", r, g, b);
+//    NSString *webColor = [NSString stringWithFormat:@"#%02X%02X%02X", r, g, b];
+//    return webColor;
+//}
 
 @end
 
